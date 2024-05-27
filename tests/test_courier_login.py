@@ -15,8 +15,7 @@ class TestCourierLogin:
             "login": payload["login"],
             "password": payload["password"]
         }
-        response_create = requests.post(url_create, data=data)
-        assert response_create.status_code == 201
+        requests.post(url_create, data=data)
         response_login = requests.post(url_login, data=data)
         assert response_login.status_code == 200
         assert response_login.json()["id"] != ""

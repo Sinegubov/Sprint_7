@@ -4,11 +4,10 @@ from helpers.register_new_courier import CourierGenerator
 from helpers.data import URL
 
 
-@allure.feature('Проверка регистрации курьера')
-class TestCourierCreate:
-    @allure.title('Получение списка заказов')
-    def test_courier_create(self, url=URL.ORDER_URL, payload=CourierGenerator.generate_courier_payload()):
+@allure.feature('Получение списка заказов')
+class TestOrdersList:
+    @allure.title('Получение списка заказов, код возврата 200 и в ответе не пустой список')
+    def test_orders_list(self, url=URL.ORDER_URL):
         response = requests.get(url)
-        print(response.text)
         assert response.status_code == 200
         assert response.json() != ""
