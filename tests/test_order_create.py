@@ -2,7 +2,7 @@ import requests
 import allure
 import pytest
 import json
-from helpers.data import URL, Order
+from data import URL, Order
 
 
 @allure.feature('Проверка создания заказа')

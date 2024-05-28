@@ -1,6 +1,7 @@
 import requests
 import allure
-from helpers.data import URL
+from data import URL, Messages
+from helpers.register_new_courier import CourierGenerator
 
 
 @allure.feature('Получение заказа по его номеру')
@@ -16,4 +17,11 @@ class TestGetOrder:
     def test_get_order_no_track_negative(self, order_url=URL.ORDER_GET_URL):
         response = requests.get(f"{order_url}")
         assert response.status_code == 400
-        assert response.json()["message"] == "Недостаточно данных для поиска"
+        assert response.json()["message"] == Messages.GET_ORDER_BY_ID_NO_TRACK
+
+    @allure.title('Запрос с несуществующим номером возвращает ошибку')
+    def test_get_order_bad_track_negative(self, order_url=URL.ORDER_GET_URL,
+                                          response_track=CourierGenerator.random_string_id()):
+        response = requests.get(f"{order_url}{response_track}")
+        assert response.status_code == 404
+        assert response.json()["message"] == Messages.GET_ORDER_BY_ID_BAD_TRACK

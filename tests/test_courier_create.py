@@ -2,7 +2,7 @@ import requests
 import allure
 import pytest
 from helpers.register_new_courier import CourierGenerator
-from helpers.data import URL
+from data import URL, Messages
 
 
 @allure.feature('Проверка регистрации курьера')
@@ -20,7 +20,7 @@ class TestCourierCreate:
         assert response.status_code == 201
         response_twice = requests.post(url, data=payload)
         assert response_twice.status_code == 409
-        assert response_twice.json()["message"] == "Этот логин уже используется. Попробуйте другой."
+        assert response_twice.json()["message"] == Messages.CREATE_TWICE
 
     @pytest.mark.parametrize("payload",
                              [
@@ -34,4 +34,4 @@ class TestCourierCreate:
     def test_courier_create_bad_payload_negative(self, payload):
         response = requests.post(URL.COURIER_URL, data=payload)
         assert response.status_code == 400
-        assert response.json()["message"] == "Недостаточно данных для создания учетной записи"
+        assert response.json()["message"] == Messages.CREATE_BAD_PAYLOAD

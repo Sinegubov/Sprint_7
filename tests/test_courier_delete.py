@@ -1,9 +1,7 @@
 import requests
 import allure
-import pytest
-import json
 from helpers.register_new_courier import CourierGenerator
-from helpers.data import URL
+from data import URL, Messages
 
 
 @allure.feature('Проверка удаления курьера')
@@ -21,13 +19,13 @@ class TestCourierCreate:
         assert response.text == '{"ok":true}'
 
     @allure.title('Проверяем, запрос с несуществующим id')
-    def test_delete_courier_with_bad_id(self, courier_id=CourierGenerator.bad_courier_id()):
+    def test_delete_courier_with_bad_id(self, courier_id=CourierGenerator.random_string_id()):
         response = requests.delete(f"{URL.COURIER_URL}/{courier_id}")
         assert response.status_code == 404
-        assert response.json()["message"] == "Курьера с таким id нет."
+        assert response.json()["message"] == Messages.DELETE_BAD_ID
 
     @allure.title('Проверяем, запрос без id')
     def test_delete_courier_without_id(self):
         response = requests.delete(f"{URL.COURIER_URL}")
         assert response.status_code == 404
-        assert response.json()["message"] == "Not Found."
+        assert response.json()["message"] == Messages.DELETE_WITHOUT_ID

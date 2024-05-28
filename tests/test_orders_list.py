@@ -1,7 +1,6 @@
 import requests
 import allure
-from helpers.register_new_courier import CourierGenerator
-from helpers.data import URL
+from data import URL
 
 
 @allure.feature('Получение списка заказов')
