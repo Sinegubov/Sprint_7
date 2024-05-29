@@ -8,5 +8,6 @@ class TestOrdersList:
     @allure.title('Получение списка заказов, код возврата 200 и в ответе не пустой список')
     def test_orders_list(self, url=URL.ORDER_URL):
         response = requests.get(url)
+        print(response.text)
         assert response.status_code == 200
         assert response.json() != ""

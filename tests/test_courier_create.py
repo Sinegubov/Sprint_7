@@ -11,7 +11,7 @@ class TestCourierCreate:
     def test_courier_create(self, url=URL.COURIER_URL, payload=CourierGenerator.generate_courier_payload()):
         response = requests.post(url, data=payload)
         assert response.status_code == 201
-        assert response.text == '{"ok":true}'
+        assert response.text == Messages.OK
 
     @allure.title('Проверяем, что нельзя создать двух одинаковых курьеров')
     def test_courier_create_two_same_negative(self, url=URL.COURIER_URL,

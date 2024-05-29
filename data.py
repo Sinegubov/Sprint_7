@@ -1,7 +1,8 @@
 class URL:
     BASE_URL = "https://qa-scooter.praktikum-services.ru/"
     ORDER_URL = f"{BASE_URL}api/v1/orders/"
-    ORDER_GET_URL = f"{BASE_URL}/api/v1/orders/track?t="
+    ORDER_ACCEPT_URL = f"{BASE_URL}api/v1/orders/accept/"
+    ORDER_GET_URL = f"{BASE_URL}api/v1/orders/track?t="
     COURIER_URL = f"{BASE_URL}api/v1/courier"
     COURIER_LOGIN_URL = f"{BASE_URL}api/v1/courier/login"
 
@@ -33,3 +34,4 @@ class Messages:
     ACCEPT_ORDER_BAD_COURIER_ID = "Курьера с таким id не существует"
     ACCEPT_ORDER_TWICE = "Этот заказ уже в работе"
     ACCEPT_ORDER_NO_ID_NO_COURIER_ID = "Недостаточно данных для поиска"
+    OK = '{"ok":true}'

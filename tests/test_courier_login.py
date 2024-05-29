@@ -20,7 +20,7 @@ class TestCourierLogin:
         assert response_login.status_code == 200
         assert response_login.json()["id"] != ""
 
-    @allure.title('Проверяем, если авторизоваться под несуществующим пользователем, запрос возвращает ошибку и код 404')
+    @allure.title('Проверяем, если авторизацию под несуществующим пользователем, запрос возвращает ошибку и код 404')
     def test_courier_not_valid_login(self, url=URL.COURIER_LOGIN_URL,
                                      payload=CourierGenerator().generate_courier_payload()):
         data = {

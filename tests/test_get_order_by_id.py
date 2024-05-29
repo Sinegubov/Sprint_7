@@ -15,7 +15,7 @@ class TestGetOrder:
 
     @allure.title('Запрос без номера заказа возвращает ошибку')
     def test_get_order_no_track_negative(self, order_url=URL.ORDER_GET_URL):
-        response = requests.get(f"{order_url}")
+        response = requests.get(order_url)
         assert response.status_code == 400
         assert response.json()["message"] == Messages.GET_ORDER_BY_ID_NO_TRACK
 
