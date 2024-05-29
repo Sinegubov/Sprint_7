@@ -6,7 +6,7 @@ from data import URL, Order
 
 
 @allure.feature('Проверка создания заказа')
-class TestOrderCreate:
+class TestPostOrderCreate:
     @pytest.mark.parametrize("data",
                              [
                                  {"color": "[BLACK]"},
@@ -16,7 +16,7 @@ class TestOrderCreate:
                              ])
     @allure.title('Проверка создания заказа c разными вариантами цветов самоката')
     def test_order_create(self, data, url=URL.ORDER_URL):
-        payload = Order.payload.update(data)
+        payload = Order.payload_without_color.update(data)
         payload_string = json.dumps(payload)
         response = requests.post(url, data=payload_string)
         assert response.status_code == 201
