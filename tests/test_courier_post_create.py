@@ -2,13 +2,14 @@ import requests
 import allure
 import pytest
 from data import URL, Messages
+from helpers import CourierGenerator
 
 
 @allure.feature('Проверка регистрации курьера')
 class TestPostCourierCreate:
     @allure.title('Проверяем, что при успешном создании курьера возвращается код 201 и статус "ok":true')
-    def test_courier_create(self, generator, url=URL.COURIER_URL):
-        login, password, firstname = generator.generate_data()
+    def test_courier_create(self, url=URL.COURIER_URL):
+        login, password, firstname = CourierGenerator().generate_data()
         payload = {
             "login": login,
             "password": password,
@@ -17,11 +18,11 @@ class TestPostCourierCreate:
         response = requests.post(url, data=payload)
         assert response.status_code == 201
         assert response.text == Messages.OK
-        generator.delete_courier(login, password)
+        CourierGenerator().delete_courier(login, password)
 
     @allure.title('Проверяем, что нельзя создать двух одинаковых курьеров')
-    def test_courier_create_twice(self, generator, url=URL.COURIER_URL):
-        login, password, firstname = generator.generate_data()
+    def test_courier_create_twice(self, url=URL.COURIER_URL):
+        login, password, firstname = CourierGenerator().generate_data()
         payload = {
             "login": login,
             "password": password,
@@ -32,7 +33,7 @@ class TestPostCourierCreate:
         response_twice = requests.post(url, data=payload)
         assert response_twice.status_code == 409
         assert response_twice.json()["message"] == Messages.CREATE_TWICE
-        generator.delete_courier(login, password)
+        CourierGenerator().delete_courier(login, password)
 
     @pytest.mark.parametrize("payload",
                              [

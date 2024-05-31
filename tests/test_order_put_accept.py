@@ -1,6 +1,7 @@
 import requests
 import allure
 from data import URL, Messages
+from helpers import CourierGenerator
 
 
 @allure.feature('Принять заказ по его номеру и id курьера')
@@ -14,16 +15,16 @@ class TestPutOrderAccept:
         assert response.text == Messages.OK
 
     @allure.title('Запрос c несуществующим id номером')
-    def test_accept_order_bad_id_negative(self, generator, create_courier, url=URL.ORDER_ACCEPT_URL):
-        id_order = generator.random_string_id()
+    def test_accept_order_bad_id_negative(self, create_courier, url=URL.ORDER_ACCEPT_URL):
+        id_order = CourierGenerator().random_string_id()
         id_courier = create_courier
         response = requests.put(f'{url}{id_order}?courierId={id_courier}')
         assert response.status_code == 404
         assert response.json()["message"] == Messages.ACCEPT_ORDER_BAD_ID
 
     @allure.title('Запрос c несуществующим id курьера')
-    def test_accept_order_bad_courier_id_negative(self, generator, take_id_order, url=URL.ORDER_ACCEPT_URL):
-        id_courier = generator.random_string_id()
+    def test_accept_order_bad_courier_id_negative(self, take_id_order, url=URL.ORDER_ACCEPT_URL):
+        id_courier = CourierGenerator().random_string_id()
         id_order = take_id_order
         response = requests.put(f'{url}{id_order}?courierId={id_courier}')
         assert response.status_code == 404

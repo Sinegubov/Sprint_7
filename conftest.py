@@ -6,11 +6,6 @@ from helpers import CourierGenerator
 
 
 @pytest.fixture(scope='function')
-def generator():
-    return CourierGenerator()
-
-
-@pytest.fixture(scope='function')
 def create_order():
     response_create_order = requests.post(URL.ORDER_URL, json=Order.payload)
     track = response_create_order.json()['track']
@@ -26,8 +21,8 @@ def take_id_order(create_order):
 
 
 @pytest.fixture(scope='function')
-def create_courier(generator):
-    login_pass = generator.register_new_courier_and_return_login_password()
+def create_courier():
+    login_pass = CourierGenerator().register_new_courier_and_return_login_password()
     response_post = requests.post(URL.COURIER_LOGIN_URL, data=login_pass)
     courier_id = response_post.json()['id']
     yield courier_id
